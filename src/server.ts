@@ -2,6 +2,10 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { fetch } from "undici";
+import { loadEnvFile } from "./load-env.js";
+
+// Load environment variables from .env file silently
+loadEnvFile('/Users/imranbeg/mcp-get-server/.env');
 
 // Jira configuration from environment variables
 const JIRA_URL = process.env.JIRA_URL;
@@ -22,6 +26,7 @@ const mcp = new McpServer(
     version: "1.0.0",
   },
   {
+    
     capabilities: {
       tools: {},
     },
