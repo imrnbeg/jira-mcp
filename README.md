@@ -5,6 +5,12 @@ A Model Context Protocol (MCP) server that integrates Jira with Claude Desktop, 
 ## Features
 
 - 🔍 **Get Jira Issue Details**: Fetch comprehensive information about any Jira issue by its key
+- 📁 **Browse Projects**: List projects and view project details
+- 🧭 **Understand Workflows**: See issue types and statuses per project
+- 🔎 **Search Issues (JQL)**: Flexible search with pagination and selected fields
+- 📌 **Project Issue Lists**: Quickly list issues in a project
+- 💬 **Issue Comments**: Read comments on an issue
+- 🗂️ **Agile Views**: Boards, sprints, and sprint issue listings
 - 🔐 **Secure Authentication**: Uses Jira API tokens for secure access
 - 🎯 **Structured Data**: Returns both human-readable and structured JSON data
 - 🚀 **Claude Desktop Integration**: Seamlessly works with Claude Desktop via MCP protocol
@@ -172,6 +178,131 @@ Fetches detailed information about a Jira issue.
 - Priority, issue type, creation and update dates
 - Direct link to the issue in Jira
 - Structured JSON data for programmatic access
+
+### `list_jira_projects`
+
+List accessible Jira projects with pagination and optional search query.
+
+**Parameters:**
+- `query` (string, optional): Search by key/name
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+
+### `get_jira_project`
+
+Get full metadata for a Jira project by key or ID.
+
+**Parameters:**
+- `projectIdOrKey` (string): Project key or ID
+
+### `get_project_statuses`
+
+Get available statuses for each issue type in a project.
+
+**Parameters:**
+- `projectIdOrKey` (string): Project key or ID
+
+### `search_jira_issues`
+
+Search issues using JQL with pagination and field selection.
+
+**Parameters:**
+- `jql` (string): JQL query
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+- `fields` (string, optional): Comma-separated fields
+
+### `list_project_issues`
+
+List issues in a specific project with optional extra JQL.
+
+**Parameters:**
+- `projectKey` (string): Project key
+- `jqlTail` (string, optional): Extra JQL (e.g., AND status="In Progress")
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+
+### `get_jira_issue_comments`
+
+Retrieve comments for a Jira issue.
+
+**Parameters:**
+- `issueIdOrKey` (string): Issue key or ID
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+
+### `list_boards`
+
+List Jira boards with optional filters.
+
+**Parameters:**
+- `type` ("scrum"|"kanban", optional): Board type
+- `projectKeyOrId` (string, optional): Filter by project
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+
+### `list_board_sprints`
+
+List sprints on a board.
+
+**Parameters:**
+- `boardId` (number): Board ID
+- `state` ("active"|"future"|"closed", optional): Sprint state
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+
+### `list_sprint_issues`
+
+List issues in a sprint with pagination.
+
+**Parameters:**
+- `sprintId` (number): Sprint ID
+- `startAt` (number, optional): Pagination start
+- `maxResults` (number, optional): Page size (1-100)
+- `jql` (string, optional): Additional JQL filter
+
+## Example Prompts
+
+Use these prompts in Claude Desktop to leverage the tools:
+
+### Project discovery
+```
+List my Jira projects.
+```
+```
+Search Jira projects matching "platform".
+```
+```
+Show details for project PROJ.
+```
+```
+What issue types and statuses exist in project PROJ?
+```
+
+### Issue search and browsing
+```
+Find issues in project PROJ assigned to me that are In Progress.
+```
+```
+Search issues updated in the last 7 days with label "release".
+```
+```
+List issues in project PROJ with status = "To Do".
+```
+```
+Get comments for issue PROJ-123.
+```
+
+### Agile views
+```
+List all Scrum boards for project PROJ.
+```
+```
+Show active sprints on board 12.
+```
+```
+List issues in sprint 345 ordered by priority.
+```
 
 ## Development
 

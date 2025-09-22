@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "mcp-jira-server": {
+      "command": "node",
+      "args": ["/Users/imranbeg/mcp-get-server/dist/server.js"],
+      "cwd": "/Users/imranbeg/mcp-get-server"
+    }
+  }
+}
